@@ -47,10 +47,19 @@ class RecipeController extends Controller
     return view('admin/recipe/edit');
   }
 
-  public function index()
+ public function index(Request $request)
   {
-    return view('admin.recipe.index');
+      $cond_title = $request->cond_title;
+      if ($cond_title != '') {
+        
+          $posts = Recipe::where('title', $cond_title)->get();
+      } else {
+          
+          $posts = Recipe::all();
+      }
+      redirect view('admin.recipe.index', ['posts' => $posts, 'cond_title' => $cond_title]);
   }
+
   
 }
 
