@@ -5,62 +5,177 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
+use App\Recipe;
+use App\Tag;
+use App\Time;
+use App\RecipesTag;
 class RecipeController extends Controller
 {
   public function add()
   {
     $categories = Category::all();
-    return view('admin.recipe.create',["categories" => $categories]);
+    $times = Time::all();
+    return view('admin.recipe.create',["categories" => $categories],["times" => $times]);
   }
 
-  public function create()
+  public function create(Request $request)
   {
     $this->validate($request, Recipe::$rules);
-    
+   
+    $tag = new Tag;
     $recipe = new Recipe;
     $form = $request->all();
     
-    if (isset($form['image'])) {
-        $path = $request->file('image')->store('public/image');
-        $recipe->image_path = basename($path);
-      } else {
-          $recipe->image_path = null;
+    //recipeデータの保存(recipe_idを発番)
+    if (isset($form['top_image'])) {
+      $path = $request->file('top_image')->store('public/image');
+      $recipe->top_image_path = basename($path);
+    } else {
+      $recipe->top_image_path = null;
+    }
+    
+    if (isset($form['memo1_image'])) {
+      $path = $request->file('memo1_image')->store('public/image');
+      $recipe->memo1_image_path = basename($path);
+    } else {
+      $recipe->memo1_image_path = null;
+    }
+    
+    if (isset($form['memo2_image'])) {
+      $path = $request->file('memo2_image')->store('public/image');
+      $recipe->memo2_image_path = basename($path);
+    } else {
+      $recipe->memo2_image_path = null;
+    }
+    
+    if (isset($form['memo3_image'])) {
+      $path = $request->file('memo3_image')->store('public/image');
+      $recipe->memo3_image_path = basename($path);
+    } else {
+      $recipe->memo3_image_path = null;
+    }
+        
+    unset($form['_token']);
+    
+    unset($form['top_image']);
+    unset($form['memo1_image']);
+    unset($form['memo2_image']);
+    unset($form['memo3_image']);
+    
+    unset($form['tag']);
+    
+    $recipe->fill($form);
+    $recipe->save();
+  
+    
+    if (!empty($request->tag)){
+      $tag_names=explode("#", $request->tag);
+      foreach($tag_names as $tag_name){
+        $data = null;
+        if(!empty($tag_name)){
+          $data = Tag::where('name',$tag_name)->first();
           
-          unset($form['_token']);
-          
-          unset($form['image']);
-          
-          $recipe->fill($form);
-          $recipe->save();
-      
-      return redirect('admin/recipe/create');
+          if(!$data){
+            $data = new Tag;
+            $data->name=$tag_name;
+            $data->save();
+          }
+          //recipeがもつtagのデータを作成
+          $recipes_tag = new RecipesTag;
+          $recipes_tag->recipe_id = $recipe->id;
+          $recipes_tag->tag_id = $data->id;
+          $recipes_tag->save();
+        }
+        
       }
+    }
+    
+       
+      return redirect('admin/recipe/create');
   }
 
-  public function edit()
+ public function edit(Request $request)
   {
-    return view('admin.recipe.edit');
+    $categories = Category::all();
+    $times = Time::all();
+    // Recipe Modelからデータを取得する
+    $recipe = Recipe::find($request->id);
+      if (empty($recipe)) {
+        abort(404);    
+      }
+    return view('admin.recipe.edit', ['recipe_form' => $recipe],["categories" => $categories],["times" => $times]);
   }
 
-  public function update()
+
+  public function update(Request $request)
   {
-    return view('admin/recipe/edit');
+      // Validationをかける
+      $this->validate($request, Recipe::$rules);
+      // Recipe Modelからデータを取得する
+      $recipe = Recipe::find($request->id);
+      // 送信されてきたフォームデータを格納する
+      $recipe_form = $request->all();
+      if (isset($recipe_form['top_image'])) {
+        $path = $request->file('top_image')->store('public/image');
+        $recipe->top_image_path = basename($path);
+        unset($recipe_form['top_image']);
+      } elseif (isset($request->remove)) {
+        $recipe->top_image_path = null;
+        unset($recipe_form['remove']);
+      }
+      if (isset($recipe_form['memo1_image'])) {
+        $path = $request->file('memo1_image')->store('public/image');
+        $recipe->memo1_image_path = basename($path);
+        unset($recipe_form['memo1_image']);
+      } elseif (isset($request->remove)) {
+        $recipe->memo1_image_path = null;
+        unset($recipe_form['remove']);
+      }
+      if (isset($recipe_form['memo2_image'])) {
+        $path = $request->file('memo2_image')->store('public/image');
+        $recipe->memo2_image_path = basename($path);
+        unset($recipe_form['memo2_image']);
+      } elseif (isset($request->remove)) {
+        $recipe->memo2_image_path = null;
+        unset($recipe_form['remove']);
+      }
+      if (isset($recipe_form['memo3_image'])) {
+        $path = $request->file('memo3_image')->store('public/image');
+        $recipe->memo3_image_path = basename($path);
+        unset($recipe_form['memo3_image']);
+      } elseif (isset($request->remove)) {
+        $recipe->memo3_image_path = null;
+        unset($recipe_form['remove']);
+      }
+      
+      unset($recipe_form['_token']);
+
+      // 該当するデータを上書きして保存する
+      $recipe->fill($recipe_form)->save();
+
+      return redirect('admin/recipe', ['recipe_form' => $recipe]);
   }
 
- public function index(Request $request)
+  public function index(Request $request)
   {
       $cond_title = $request->cond_title;
       if ($cond_title != '') {
-        
-          $posts = Recipe::where('title', $cond_title)->get();
+          // 検索されたら検索結果を取得する
+          $recipes = Recipe::where('title', $cond_title)->get();
       } else {
-          
-          $posts = Recipe::all();
+          // それ以外はすべてのレシピを取得する
+          $recipes = Recipe::all();
       }
-      redirect view('admin.recipe.index', ['posts' => $posts, 'cond_title' => $cond_title]);
+      return view('admin.recipe.index', ['recipes' => $recipes, 'cond_title' => $cond_title]);
   }
 
-  
+  public function delete(Request $request)
+  {
+    // 該当するRecipe Modelを取得
+    $recipes = Recipe::find($request->id);
+    // 削除する
+    $recipes->delete();
+    return redirect('admin/recipe/');
+  }  
+
 }
-
-

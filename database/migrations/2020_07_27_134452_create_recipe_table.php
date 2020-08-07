@@ -13,18 +13,18 @@ class CreateRecipeTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipe', function (Blueprint $table) {
+        Schema::create('recipes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
             $table->integer('category_id');
             $table->integer('time_id');
-            $table->string('tag_id')->nullable();
+            $table->integer('tag_id')->nullable();
             $table->string('top_image_path')->nullable();
             $table->string('ingredient');
             $table->string('step');
             $table->string('memo1_title')->nullable();
             $table->string('memo1_content')->nullable();
-            $table->string('memo1_image_path')->nullable();
+            $table->string('memo1_image')->nullable();
             $table->string('memo2_title')->nullable();
             $table->string('memo2_content')->nullable();
             $table->string('memo2_image_path')->nullable();
@@ -42,6 +42,6 @@ class CreateRecipeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe');
+        Schema::dropIfExists('recipes');
     }
 }

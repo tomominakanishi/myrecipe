@@ -23,7 +23,7 @@ class CategoryController extends Controller
     $category->fill($form);
     $category->save();
     
-    return view('admin/category/create');
+    return redirect('admin/category/create');
   }
   
 }

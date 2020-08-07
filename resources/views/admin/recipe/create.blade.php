@@ -26,7 +26,7 @@
                 <div class="form-group row">
                   <label class="col-md-2">カテゴリ</label>
                   <div class="col-md-10">
-                    <select name="category">
+                    <select name="category_id">
                       @foreach($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                       @endforeach
@@ -36,88 +36,89 @@
                 <div class="form-group row">
                   <label class="col-md-2">調理時間(/分)</label>
                   <div class="col-md-10">
-                    <select name="time">
-                      <option value="15">15</option>
-                      <option value="30">30</option>
+                    <select name="time_id">
+                      @foreach($times as $time)
+                      <option value="{{ $time->id }}">{{ $time->time_name }}</option>
+                      @endforeach
                     </select>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">タグ</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="body" rows="1">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="tag" rows="1">{{ old('tag') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2" for="title">トップ画像</label>
                   <div class="col-md-10">
-                    <input type="file" class="form-control-file" name="image">
+                    <input type="file" class="form-control-file" name="top_image">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">材料</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="body" rows="10">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="ingredient" rows="10">{{ old('body') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">作り方</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="body" rows="10">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="step" rows="10">{{ old('body') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ1タイトル</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="body" rows="1">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo1_title" rows="1">{{ old('body') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ1内容</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="body" rows="3">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo1_content" rows="3">{{ old('body') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2" for="title">メモ1画像</label>
                   <div class="col-md-10">
-                    <input type="file" class="form-control-file" name="image">
+                    <input type="file" class="form-control-file" name="memo1_image">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ2タイトル</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="body" rows="1">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo2_title" rows="1">{{ old('body') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ2内容</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="body" rows="3">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo2_content" rows="3">{{ old('body') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2" for="title">メモ2画像</label>
                   <div class="col-md-10">
-                    <input type="file" class="form-control-file" name="image">
+                    <input type="file" class="form-control-file" name="memo2_image">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ3タイトル</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="body" rows="1">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo3_title" rows="1">{{ old('body') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ3内容</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="body" rows="3">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo3_content" rows="3">{{ old('body') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2" for="title">メモ3画像</label>
                   <div class="col-md-10">
-                    <input type="file" class="form-control-file" name="image">
+                    <input type="file" class="form-control-file" name="memo3_image">
                   </div>
                 </div>
               {{ csrf_field() }}

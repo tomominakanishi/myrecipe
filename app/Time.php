@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Time extends Model
 {
   protected $guarded = array('id');
- 
+  
   public static $rules = array(
-    'category_name' => 'required',
+    'time_name' => 'required',
   );
   
   public function recipes()

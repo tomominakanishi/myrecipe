@@ -39,7 +39,7 @@
                         <tbody>
                             @foreach($categories as $category)
                                 <tr>
-                                    <th>{{ $category->category_id }}</th>
+                                    <th>{{ $category->id }}</th>
                                     <td>{{ \Str::limit($category->category_name, 100) }}</td>
                                 </tr>
                             @endforeach

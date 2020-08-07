@@ -6,9 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recipe extends Model
 {
-    'title' => 'required',
-    'category_id' => 'required',
-    'time_id' => 'required',
-    'ingredient' => 'required',
-    'step' => 'required',
+  protected $guarded = array('id');
+  public static $rules = array(
+      'title' => 'required',
+      'ingredient' => 'required',
+      'step' => 'required',
+  );
+    
+  public function category()
+  {
+    return $this->belongsTo('App\Category');
+  } 
+  
+  public function time()
+  {
+    return $this->belongsTo('App\Time');
+  } 
+  
 }
