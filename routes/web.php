@@ -17,10 +17,13 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function() {
     Route::get('recipe/edit', 'Admin\RecipeController@edit'); 
     Route::post('recipe/edit', 'Admin\RecipeController@update');
     Route::get('recipe', 'Admin\RecipeController@index');
-    Route::get('recipe', 'Admin\RecipeController@delete');
+    Route::get('recipe/delete', 'Admin\RecipeController@delete');
     Route::get('category/create','Admin\CategoryController@add');
     Route::post('category/create','Admin\CategoryController@create');
-});
+   });
+
+Route::get('/', 'RecipeController@index');
+Route::get('/kondate', 'RecipeController@show');
 
 Auth::routes();
 

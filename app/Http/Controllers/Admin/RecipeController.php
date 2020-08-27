@@ -8,7 +8,7 @@ use App\Category;
 use App\Recipe;
 use App\Tag;
 use App\Time;
-use App\RecipesTag;
+use App\RecipeTag;
 class RecipeController extends Controller
 {
   public function add()
@@ -81,7 +81,7 @@ class RecipeController extends Controller
             $data->save();
           }
           //recipeがもつtagのデータを作成
-          $recipes_tag = new RecipesTag;
+          $recipes_tag = new RecipeTag;
           $recipes_tag->recipe_id = $recipe->id;
           $recipes_tag->tag_id = $data->id;
           $recipes_tag->save();
@@ -98,12 +98,16 @@ class RecipeController extends Controller
   {
     $categories = Category::all();
     $times = Time::all();
-    // Recipe Modelからデータを取得する
+    //Recipe Modelからデータを取得する
     $recipe = Recipe::find($request->id);
-      if (empty($recipe)) {
-        abort(404);    
+    if (empty($recipe)) {
+      abort(404);    
       }
-    return view('admin.recipe.edit', ['recipe_form' => $recipe],["categories" => $categories],["times" => $times]);
+    $str_tags = '';
+    foreach ($recipe->tags as $tag){
+      $str_tags .= ("#" . $tag->name);
+    }
+   return view('admin.recipe.edit', ['recipe_form' => $recipe,"categories" => $categories,"times" => $times, "str_tags" => $str_tags]);
   }
 
 
@@ -111,10 +115,16 @@ class RecipeController extends Controller
   {
       // Validationをかける
       $this->validate($request, Recipe::$rules);
+      
+      //Tagモデルを利用する
+      $tag = new Tag;
+      
       // Recipe Modelからデータを取得する
       $recipe = Recipe::find($request->id);
+      
       // 送信されてきたフォームデータを格納する
       $recipe_form = $request->all();
+      
       if (isset($recipe_form['top_image'])) {
         $path = $request->file('top_image')->store('public/image');
         $recipe->top_image_path = basename($path);
@@ -149,11 +159,33 @@ class RecipeController extends Controller
       }
       
       unset($recipe_form['_token']);
+      unset($recipe_form['tag']);
 
       // 該当するデータを上書きして保存する
       $recipe->fill($recipe_form)->save();
+      
+      if (!empty($request->tag)){
+      $tag_names=explode("#", $request->tag);
+      foreach($tag_names as $tag_name){
+        $data = null;
+        if(!empty($tag_name)){
+          $data = Tag::where('name',$tag_name)->first();
+      
+          if(!$data){
+            $data = new Tag;
+            $data->name=$tag_name;
+            $data->save();
+          }
+          //recipeがもつtagのデータを作成
+          $recipes_tag = new RecipeTag;
+          $recipes_tag->recipe_id = $recipe->id;
+          $recipes_tag->tag_id = $data->id;
+          $recipes_tag->save();
+        }
+      }
+    }
 
-      return redirect('admin/recipe', ['recipe_form' => $recipe]);
+      return redirect('admin/recipe');
   }
 
   public function index(Request $request)

@@ -13,7 +13,7 @@ class RecipesTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipes_tags', function (Blueprint $table) {
+        Schema::create('recipe_tag', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('recipe_id');
             $table->bigInteger('tag_id');
@@ -28,6 +28,6 @@ class RecipesTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipes_tags');
+        Schema::dropIfExists('recipe_tag');
     }
 }

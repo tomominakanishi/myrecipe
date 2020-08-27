@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RecipesTag extends Model
+class RecipeTag extends Model
 {
-    //
+  protected $table='recipe_tag';
 }

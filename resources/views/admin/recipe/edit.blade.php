@@ -28,7 +28,11 @@
                   <div class="col-md-10">
                     <select name="category_id">
                       @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                        @if($category->id == $recipe_form->category_id)
+                          <option value="{{ $category->id }}" selected>{{ $category->category_name }}</option>
+                        @else
+                          <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -38,7 +42,11 @@
                   <div class="col-md-10">
                     <select name="time_id">
                       @foreach($times as $time)
-                      <option value="{{ $time->id }}">{{ $time->time_name }}</option>
+                        @if($time->id == $recipe_form->time_id)
+                          <option value="{{ $time->id }}" selected>{{ $time->time_name }}</option>
+                        @else
+                          <option value="{{ $time->id }}">{{ $time->time_name }}</option>
+                        @endif
                       @endforeach
                     </select>
                   </div>
@@ -46,7 +54,7 @@
                 <div class="form-group row">
                   <label class="col-md-2">タグ</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="tag" rows="1">{{ old('tag') }}</textarea>
+                    <textarea class="form-control" name="tag" rows="1">{{ $str_tags }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -153,11 +161,15 @@
                     </div>
                   </div>
                 </div>
-              {{ csrf_field() }}
-                  <input type="submit" class="btn btn-primary" value="更新">
-              </form>
+              <div class="form-group row">
+                        <div class="col-md-10">
+                            <input type="hidden" name="id" value="{{ $recipe_form->id }}">
+                            {{ csrf_field() }}
+                            <input type="submit" class="btn btn-primary" value="更新">
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 @endsection
-

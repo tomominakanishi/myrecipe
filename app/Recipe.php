@@ -23,4 +23,8 @@ class Recipe extends Model
     return $this->belongsTo('App\Time');
   } 
   
+  public function tags()
+  {
+    return $this->belongsToMany('App\Tag');
+  } 
 }

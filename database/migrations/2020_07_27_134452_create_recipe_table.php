@@ -18,13 +18,12 @@ class CreateRecipeTable extends Migration
             $table->string('title');
             $table->integer('category_id');
             $table->integer('time_id');
-            $table->integer('tag_id')->nullable();
             $table->string('top_image_path')->nullable();
             $table->string('ingredient');
             $table->string('step');
             $table->string('memo1_title')->nullable();
             $table->string('memo1_content')->nullable();
-            $table->string('memo1_image')->nullable();
+            $table->string('memo1_image_path')->nullable();
             $table->string('memo2_title')->nullable();
             $table->string('memo2_content')->nullable();
             $table->string('memo2_image_path')->nullable();
