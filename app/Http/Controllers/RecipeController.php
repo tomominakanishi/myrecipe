@@ -13,15 +13,12 @@ use App\RecipeTag;
 class RecipeController extends Controller
 {
     public function index(Request $request)
-    {
+    {   
         $recipes = Recipe::all()->sortByDesc('updated_at');
-
-        if (count($recipes) > 0) {
-            $headline = $recipes->shift();
-        } else {
-            $headline = null;
-        }
+       
         
+        
+
         $cond_title = $request->cond_title;
         if ($cond_title != '') {
         // 検索されたら検索結果を取得する
@@ -30,12 +27,14 @@ class RecipeController extends Controller
             if (count($recipes) === 0){
         //一覧を表示
             $recipes = Recipe::all();
+            
             }
         }
-
+         
+        
         // recipe/index.blade.php ファイルを渡している
         // また View テンプレートに headline、 recipes、という変数を渡している
-        return view('recipe.index', ['headline' => $headline, 'recipes' => $recipes, 'cond_title' => $cond_title]);
+        return view('recipe.index', ['recipes' => $recipes, 'cond_title' => $cond_title]);
     }
     
      public function show(Request $request)

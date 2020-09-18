@@ -35,21 +35,21 @@ class RecipeController extends Controller
     }
     
     if (isset($form['memo1_image'])) {
-      $path = $request->file('memo1_image')->store('public/image');
+      $path = $request->file('memo1_image_path')->store('public/image');
       $recipe->memo1_image_path = basename($path);
     } else {
       $recipe->memo1_image_path = null;
     }
     
     if (isset($form['memo2_image'])) {
-      $path = $request->file('memo2_image')->store('public/image');
+      $path = $request->file('memo2_image_path')->store('public/image');
       $recipe->memo2_image_path = basename($path);
     } else {
       $recipe->memo2_image_path = null;
     }
     
     if (isset($form['memo3_image'])) {
-      $path = $request->file('memo3_image')->store('public/image');
+      $path = $request->file('memo3_image_path')->store('public/image');
       $recipe->memo3_image_path = basename($path);
     } else {
       $recipe->memo3_image_path = null;

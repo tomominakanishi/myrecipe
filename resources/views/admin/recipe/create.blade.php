@@ -56,27 +56,33 @@
                   </div>
                 </div>
                 <div class="form-group row">
+                  <label class="col-md-2">概要</label>
+                  <div class="col-md-10">
+                    <textarea class="form-control" name="overview" rows="10">{{ old('overview') }}</textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
                   <label class="col-md-2">材料</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="ingredient" rows="10">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="ingredient" rows="10">{{ old('ingredient') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">作り方</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="step" rows="10">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="step" rows="10">{{ old('step') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ1タイトル</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="memo1_title" rows="1">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo1_title" rows="1">{{ old('memo1_title') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ1内容</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="memo1_content" rows="3">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo1_content" rows="3">{{ old('memo1_content') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -88,13 +94,13 @@
                 <div class="form-group row">
                   <label class="col-md-2">メモ2タイトル</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="memo2_title" rows="1">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo2_title" rows="1">{{ old('memo2_title') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ2内容</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="memo2_content" rows="3">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo2_content" rows="3">{{ old('memo2_content') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -106,13 +112,13 @@
                 <div class="form-group row">
                   <label class="col-md-2">メモ3タイトル</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="memo3_title" rows="1">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo3_title" rows="1">{{ old('memo3_title') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2">メモ3内容</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" name="memo3_content" rows="3">{{ old('body') }}</textarea>
+                    <textarea class="form-control" name="memo3_content" rows="3">{{ old('memo3_content') }}</textarea>
                   </div>
                 </div>
                 <div class="form-group row">
